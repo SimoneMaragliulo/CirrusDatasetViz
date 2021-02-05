@@ -8,7 +8,7 @@ LiDARtype       = 'gaussian';   %uniform or gaussian
 depthLim        = 50;           %LiDAR plot depth visualization limit (m)
 latLim          = 25;           %LiDAR plot lateral visualization limit (m)
 altLim          = 20;           %LiDAR plot altitude visualization limit (m)
-colorLim        = 30;           %LiDAR plot colormap limit (m)
+colorLim        = 30;           %LiDAR plot radial distance colormap limit (m)
 bkgdCol         = [0 0 0];      %LiDAR plot background color triplet
 clMap           = 'spring';     %Point cloud Colormap name: https://www.mathworks.com/help/matlab/ref/colormap.html 
 camVwLatAng     = 87;           %LiDAR plot camera view orizzontal angle: 90 = driver view, 0 = lateral view 
@@ -59,14 +59,14 @@ for i = 1:numel(flLst)
     a               = dt(:,1);                              %LiDAR x data
     b               = dt(:,2);                              %LiDAR y data
     c               = dt(:,3);                              %LiDAR z data
-    scatter3(a,b,c,1, sqrt(a.^2 + b.^2))
+    scatter3(a,b,c,1, sqrt(a.^2 + b.^2 + c.^2))
     set(gca, 'Color', bkgdCol)
     xlim([0 depthLim]), xlabel('x')
     ylim([-latLim latLim]), ylabel('y')
     zlim([-5 altLim]), zlabel('z')
     colormap(clMap)
     c               = colorbar;
-    c.Label.String  = 'Distance (m)';
+    c.Label.String  = 'Radial distance (m)';
     caxis([0, colorLim])
     view(-camVwLatAng, camVwAltAng)
 
